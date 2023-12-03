@@ -7,12 +7,7 @@ import { useEffect, useState } from 'react';
 import { Revenue } from '../lib/definitions';
 
 export default async function Page() {
-  const [revenues, setRevenues] = useState<Revenue[]>();
-
   const revenueTot = await fetchRevenue();
-  useEffect(() => {
-    setRevenues(revenueTot);
-  }, []);
 
   return (
     <main>
