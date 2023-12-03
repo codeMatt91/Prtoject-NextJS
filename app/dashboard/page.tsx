@@ -2,12 +2,15 @@ import { Card } from '@/app/ui/dashboard/cards';
 import RevenueChart from '@/app/ui/dashboard/revenue-chart';
 import LatestInvoices from '@/app/ui/dashboard/latest-invoices';
 import { lusitana } from '@/app/ui/fonts';
-import { fetchRevenue } from '../lib/data';
+import { fetchRevenue, fetchLatestInvoices } from '../lib/data';
 import { useEffect, useState } from 'react';
 import { Revenue } from '../lib/definitions';
 
 export default async function Page() {
+  // API che recupera tutto lo storico delle revenue
   const revenueTot = await fetchRevenue();
+  // API che recupera le ultime 5 fatture
+  const latestInvoices = await fetchLatestInvoices();
 
   return (
     <main>
@@ -26,7 +29,7 @@ export default async function Page() {
       </div>
       <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8">
         <RevenueChart revenue={revenueTot} />
-        {/* <LatestInvoices latestInvoices={latestInvoices} /> */}
+        <LatestInvoices latestInvoices={latestInvoices} />
       </div>
     </main>
   );
