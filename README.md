@@ -15,6 +15,17 @@ Piccola descrizione dello scaffolding:
 
 /scripts: contiene uno script di seeding che utilizziamo per popolare il DB
 
+# DB e seeding
+
+- Nel file .env andiamo a specificare i dati per connetterci al DB(Postgres) in questo caso con deployment gestito da Vercel
+- Installiamo la libreria vercel/postgres(npm i @vercel/postgres) che ci permettera di gestire il DB lanciando degli script
+- configuriamo nel file package.json un comando di script per eseguire il seeding "seed": "node -r dotenv/config ./scripts/seed.js" -> npm run seed, possiamo rendere dinamico il file??? TODO
+- Inizialmente per effettuare il seeding del DB usiamo uno script(seed.js) che contiene le istruzioni di insert nel Db e prende i dati da un file locale 'placeholder-data.js'
+- Per recuperare i dati dal server possiamo usare dei componenti specifici di React e sfruttabili da Next.js chiamati React Server Components, questi presentano 3 vantaggi principali:
+  - I componenti server supportano le PROMISE, fornendo una soluzione più semplice per attività asincrone come il recupero dei dati. È possibile utilizzare la sintassi async/await senza ricorrere alle librerie useEffect o useStateal per recuperare dei dati.
+  - I componenti server vengono eseguiti sul server, quindi puoi mantenere costosi recuperi di dati e logica sul server e inviare il risultato solo al client.
+  - Poiché i componenti server vengono eseguiti sul server, è possibile eseguire query direttamente sul database senza un livello API aggiuntivo.
+
 <!-- ************* CONCETTI BASE ************ -->
 
 # ROUTING NIDIFICATO
