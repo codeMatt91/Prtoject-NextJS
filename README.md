@@ -26,6 +26,10 @@ Piccola descrizione dello scaffolding:
   - I componenti server vengono eseguiti sul server, quindi puoi mantenere costosi recuperi di dati e logica sul server e inviare il risultato solo al client.
   - Poiché i componenti server vengono eseguiti sul server, è possibile eseguire query direttamente sul database senza un livello API aggiuntivo.
 
+# Fetch dei dati
+
+- Per poter effettuare richieste multiple in parallelo verso il server possiamo usare la funzione "Promise.all". In questo modo non dobbiamo aspettare che la prima richiesta sia conclusa per iniziare la successiva ma cominceranno tutte in parallelo e man mano che arriveranno i dati potremmo renderizzare i componenti, migliorando cosi le prestazioni
+
 <!-- ************* CONCETTI BASE ************ -->
 
 # ROUTING NIDIFICATO
@@ -51,3 +55,15 @@ Piccola descrizione dello scaffolding:
         Suddividere il codice per percorsi significa che le pagine vengono isolate. Se una determinata pagina genera un errore, il resto dell'applicazione continuerà a funzionare.
 
         Inoltre, in produzione, ogni volta che i componenti <Link> appaiono nel viewport del browser, Next.js precarica automaticamente il codice per il percorso collegato in background. Nel momento in cui l'utente fa clic sul collegamento, il codice per la pagina di destinazione sarà già caricato in background, e questo è ciò che rende la transizione della pagina quasi istantanea!
+
+# RENDERING DINAMICO
+
+- Con il rendering dinamico, il contenuto viene visualizzato sul server per ciascun utente al momento della richiesta (quando l'utente visita la pagina). Ci sono un paio di vantaggi del rendering dinamico:
+
+  - Dati in tempo reale : il rendering dinamico consente alla tua applicazione di visualizzare dati in tempo reale o aggiornati frequentemente. Questo è l'ideale per le applicazioni in cui i dati cambiano spesso.
+  - Contenuti specifici dell'utente : è più semplice fornire contenuti personalizzati, come dashboard o profili utente, e aggiornare i dati in base all'interazione dell'utente.
+  - Richiedi informazioni sull'ora : il rendering dinamico consente di accedere a informazioni che possono essere conosciute solo al momento della richiesta, come i cookie o i parametri di ricerca dell'URL.
+
+- Per impostazione predefinita, @vercel/postgresnon imposta la propria semantica di memorizzazione nella cache. Ciò consente al framework di impostare il proprio comportamento statico e dinamico.
+  Puoi utilizzare un'API Next.js richiamata unstable_noStoreall'interno dei Componenti server o funzioni di recupero dei dati per disattivare il rendering statico.
+  dobbiamo quindi importarla --> import { unstable_noStore as noStore } from 'next/cache'; ed usarla poi nei componenti --> noStore();
