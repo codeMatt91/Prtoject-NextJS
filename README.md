@@ -68,10 +68,13 @@ Piccola descrizione dello scaffolding:
   Puoi utilizzare un'API Next.js richiamata unstable_noStoreall'interno dei Componenti server o funzioni di recupero dei dati per disattivare il rendering statico.
   dobbiamo quindi importarla --> import { unstable_noStore as noStore } from 'next/cache'; ed usarla poi nei componenti --> noStore();
 
-- Una tecnica molto utile per il rendering di dati dinamici dal server è lo STREAMING, questa è una tecnica di trasferimento dati che consente di suddividere un percorso in "pezzi" più piccoli e di trasmetterli progressivamente dal server al client non appena sono pronti.Tramite lo streaming, puoi evitare che richieste di dati lente blocchino l'intera pagina. Ciò consente all'utente di vedere e interagire con parti della pagina senza attendere il caricamento di tutti i dati prima che qualsiasi interfaccia utente possa essere mostrata all'utente.
-  Lo streaming funziona bene con il modello a componenti di React, poiché ogni componente può essere considerato un pezzo .
+# STREAMIN
+
+- Per un Rendering Dinamico piu profesionale possiamo usare la tecnica chiamata STREAMING. Lo streaming è una tecnica di trasferimento dati che consente di suddividere una pagina in "pezzi" più piccoli e di trasmetterli progressivamente dal server al client non appena sono pronti.Tramite lo streaming, puoi evitare che richieste di dati lente blocchino l'intera pagina. Ciò consente all'utente di vedere e interagire con parti della pagina senza attendere il caricamento di tutti i dati prima che qualsiasi interfaccia utente possa essere mostrata all'utente.
 
 Esistono due modi per implementare lo streaming in Next.js:
 
 - A livello di pagina, con il file loading.tsx.
 - Per componenti specifici, con <Suspense>.
+
+loading.tsx è uno speciale file Next.js costruito su Suspense, che ti consente di creare un'interfaccia utente di fallback da mostrare in sostituzione durante il caricamento del contenuto della pagina.
