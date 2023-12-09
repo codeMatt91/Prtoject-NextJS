@@ -56,6 +56,9 @@ Piccola descrizione dello scaffolding:
 
         Inoltre, in produzione, ogni volta che i componenti <Link> appaiono nel viewport del browser, Next.js precarica automaticamente il codice per il percorso collegato in background. Nel momento in cui l'utente fa clic sul collegamento, il codice per la pagina di destinazione sarà già caricato in background, e questo è ciò che rende la transizione della pagina quasi istantanea!
 
+- Si possono suddividere le Rotte in Gruppi logici, ossia cartelle dove raggruppare dei componenti senza pero stravolgere il routing e senza influenzare la Url. Questo è possibile scrivendo il nome della cartella in cui inseriamo i componenti tra parentesi tonde (overview).
+  Quindi /dashboard/(overview)/page.tsx diventa --> /dashboard
+
 # RENDERING DINAMICO
 
 - Con il rendering dinamico, il contenuto viene visualizzato sul server per ciascun utente al momento della richiesta (quando l'utente visita la pagina). Ci sono un paio di vantaggi del rendering dinamico:
@@ -74,7 +77,8 @@ Piccola descrizione dello scaffolding:
 
 Esistono due modi per implementare lo streaming in Next.js:
 
-- A livello di pagina, con il file loading.tsx.
-- Per componenti specifici, con <Suspense>.
-
-loading.tsx è uno speciale file Next.js costruito su Suspense, che ti consente di creare un'interfaccia utente di fallback da mostrare in sostituzione durante il caricamento del contenuto della pagina.
+- A livello di pagina, con il file loading.tsx, questo è uno speciale file Next.js costruito su Suspense, che ti consente di creare un'interfaccia utente di fallback da mostrare in sostituzione durante il caricamento del contenuto della pagina.
+- Per componenti specifici, con <Suspense>. Questo ti consente di rinviare il rendering di parti della tua applicazione fino a quando non vengono soddisfatte alcune condizioni (ad esempio, i dati vengono caricati). Puoi avvolgere i tuoi componenti dinamici in Suspense. Quindi, passagli un componente di fallback da mostrare durante il caricamento del componente dinamico.
+  <Suspense fallback={<RevenueChartSkeleton />}>
+  <RevenueChart />
+  </Suspense>
