@@ -112,7 +112,7 @@ Il bello del prerendering parziale è che non è necessario modificare il codice
   4. Aggiorna la tabella per riflettere la query di ricerca.
 
 - NOTA BENE ->
-  Quando usare il useSearchParams()gancio rispetto searchParamsall'elica?
+  Quando usare il useSearchParams() Hook rispetto searchParams?
   Potresti aver notato che hai utilizzato due modi diversi per estrarre i parametri di ricerca. L'utilizzo dell'uno o dell'altro dipende dal fatto che si stia lavorando sul client o sul server.
 
   <Search>è un componente client, quindi hai utilizzato l' useSearchParams()hook per accedere ai parametri dal client.

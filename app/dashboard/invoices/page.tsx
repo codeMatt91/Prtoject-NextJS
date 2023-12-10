@@ -6,12 +6,19 @@ import { lusitana } from '@/app/ui/fonts';
 import { InvoicesTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
 
-export type SearchProps = {
-  query?: string;
-  page?: string;
-};
+// export type SearchProps = {
+//   query?: string;
+//   page?: string;
+// };
 
-export default async function Page(searchParams: SearchProps) {
+export default async function Page({
+  searchParams,
+}: {
+  searchParams?: {
+    query?: string;
+    page?: string;
+  };
+}) {
   const query = searchParams?.query || '';
   const currentPage = Number(searchParams?.page) || 1;
 
