@@ -101,11 +101,20 @@ Il bello del prerendering parziale è che non è necessario modificare il codice
 # Ricerca, filtro e Paginazione
 
 - Per implementare un filtro di ricerca lato server utilizzeremo degli hook di Nextjs che usano la query string per passare i parametri di ricerca al server.
-  - useSearchParams- Consente di accedere ai parametri dell'URL corrente. Ad esempio, i parametri di ricerca per questo URL /dashboard/invoices?page=1&query=pendingsarebbero simili a questi: {page: '1', query: 'pending'}.
+  - useSearchParams- è un'API Web che fornisce metodi di utilità per manipolare i parametri di query dell'URL, consente di accedere ai parametri dell'URL corrente. Ad esempio, i parametri di ricerca per questo URL /dashboard/invoices?page=1&query=pendingsarebbero simili a questi: {page: '1', query: 'pending'}.
   - usePathname- Consente di leggere il percorso dell'URL corrente. Ad esempio, per il percorso /dashboard/invoices, usePathnamerestituirebbe '/dashboard/invoices'.
   - useRouter- Abilita la navigazione tra i percorsi all'interno dei componenti client a livello di codice. Esistono diversi metodi che puoi utilizzare.
 - Fasi di implementazione di questo filtro:
+
   1. Cattura l'input dell'utente.
   2. Aggiorna l'URL con i parametri di ricerca.
   3. Mantieni l'URL sincronizzato con il campo di input.
   4. Aggiorna la tabella per riflettere la query di ricerca.
+
+- NOTA BENE ->
+  Quando usare il useSearchParams()gancio rispetto searchParamsall'elica?
+  Potresti aver notato che hai utilizzato due modi diversi per estrarre i parametri di ricerca. L'utilizzo dell'uno o dell'altro dipende dal fatto che si stia lavorando sul client o sul server.
+
+  <Search>è un componente client, quindi hai utilizzato l' useSearchParams()hook per accedere ai parametri dal client.
+  <Table>è un componente server che recupera i propri dati, quindi puoi passare la searchParamsprop dalla pagina al componente.
+  Come regola generale, se vuoi leggere i parametri dal client, usa l' useSearchParams()hook in modo da evitare di dover tornare al server.
