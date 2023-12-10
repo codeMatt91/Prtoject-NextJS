@@ -82,3 +82,30 @@ Esistono due modi per implementare lo streaming in Next.js:
   <Suspense fallback={<RevenueChartSkeleton />}>
   <RevenueChart />
   </Suspense>
+
+# RENDERING PARZIALE(sperimentale, non ancora pronta per la produzione)
+
+- In Next.js 14 è presente un'anteprima di un nuovo modello di rendering chiamato Partial Prerendering . Il prerendering parziale è una funzionalità sperimentale che ti consente di eseguire il rendering di un percorso con una shell di caricamento statica, mantenendo dinamiche alcune parti. In altre parole, puoi isolare le parti dinamiche di un percorso.
+  Quando un utente visita un percorso:
+
+- Viene servita una shell di percorso statica , questo rende veloce il caricamento iniziale.
+- La shell lascia spazi in cui il contenuto dinamico verrà caricato in modo asincrono.
+- Gli spazi asincroni vengono caricati in parallelo, riducendo il tempo di caricamento complessivo della pagina.
+  Questo è diverso da come si comporta oggi la tua applicazione, dove interi percorsi sono completamente statici o dinamici.
+  Il fallback è incorporato nel file statico iniziale insieme ad altro contenuto statico. In fase di creazione (o durante la riconvalida), le parti statiche del percorso vengono prerenderizzate e il resto viene posticipato finché l'utente non richiede il percorso.
+
+Vale la pena notare che avvolgere un componente in Suspense non rende dinamico il componente stesso (ricorda che eri abituato unstable_noStorea ottenere questo comportamento), ma piuttosto Suspense viene utilizzato come confine tra le parti statiche e dinamiche del tuo percorso.
+
+Il bello del prerendering parziale è che non è necessario modificare il codice per utilizzarlo. Finché utilizzi Suspense per avvolgere le parti dinamiche del tuo percorso, Next.js saprà quali parti del tuo percorso sono statiche e quali sono dinamiche.
+
+# Ricerca, filtro e Paginazione
+
+- Per implementare un filtro di ricerca lato server utilizzeremo degli hook di Nextjs che usano la query string per passare i parametri di ricerca al server.
+  - useSearchParams- Consente di accedere ai parametri dell'URL corrente. Ad esempio, i parametri di ricerca per questo URL /dashboard/invoices?page=1&query=pendingsarebbero simili a questi: {page: '1', query: 'pending'}.
+  - usePathname- Consente di leggere il percorso dell'URL corrente. Ad esempio, per il percorso /dashboard/invoices, usePathnamerestituirebbe '/dashboard/invoices'.
+  - useRouter- Abilita la navigazione tra i percorsi all'interno dei componenti client a livello di codice. Esistono diversi metodi che puoi utilizzare.
+- Fasi di implementazione di questo filtro:
+  1. Cattura l'input dell'utente.
+  2. Aggiorna l'URL con i parametri di ricerca.
+  3. Mantieni l'URL sincronizzato con il campo di input.
+  4. Aggiorna la tabella per riflettere la query di ricerca.
