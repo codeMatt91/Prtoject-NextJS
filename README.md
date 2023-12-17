@@ -118,3 +118,20 @@ Il bello del prerendering parziale è che non è necessario modificare il codice
   <Search>è un componente client, quindi hai utilizzato l' useSearchParams()hook per accedere ai parametri dal client.
   <Table>è un componente server che recupera i propri dati, quindi puoi passare la searchParamsprop dalla pagina al componente.
   Come regola generale, se vuoi leggere i parametri dal client, usa l' useSearchParams()hook in modo da evitare di dover tornare al server.
+
+# React Server Action
+
+- Le React Server Action ti consentono di eseguire codice asincrono direttamente sul server. Eliminano la necessità di creare endpoint API per modificare i tuoi dati. Queste funzioni asincrone vengono eseguite sul server e possono essere richiamate dai componenti client o server.
+
+  La sicurezza è una priorità assoluta per le applicazioni web, poiché possono essere vulnerabili a varie minacce. È qui che entrano in gioco le azioni server. Offrono una soluzione di sicurezza efficace, proteggendo da diversi tipi di attacchi, proteggendo i tuoi dati e garantendo l'accesso autorizzato. Le azioni del server raggiungono questo obiettivo attraverso tecniche come richieste POST, chiusure crittografate, controlli rigorosi dell'input, hashing dei messaggi di errore e restrizioni dell'host, che lavorano tutti insieme per migliorare significativamente la sicurezza della tua app.
+
+  Un vantaggio derivante dal richiamo di un'azione server all'interno di un componente server è il miglioramento progressivo: i moduli funzionano anche se JavaScript è disabilitato sul client.
+
+  Le azioni server sono inoltre profondamente integrate con la memorizzazione nella cache di Next.js. Quando un modulo viene inviato tramite un'azione server, non solo puoi utilizzare l'azione per modificare i dati, ma puoi anche riconvalidare la cache associata utilizzando API come revalidatePath e revalidateTag.
+
+  // Invoke the action using the "action" attribute
+  return <form action={create}>...</form>;
+
+  <NOTA BENE> : in HTML, passeresti un URL all'attributo action del form. Questo URL sarà la destinazione a cui inviare i dati del modulo (solitamente un endpoint API).
+  Tuttavia, in React, l' attributo action è considerato un oggetto speciale, il che significa che React si basa su di esso per consentire l'invocazione delle azioni.
+  Dietro le quinte, le azioni server creano un endpoint POST API. Questo è il motivo per cui non è necessario creare manualmente gli endpoint API quando si utilizzano Azioni server.
