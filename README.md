@@ -59,6 +59,8 @@ Piccola descrizione dello scaffolding:
 - Si possono suddividere le Rotte in Gruppi logici, ossia cartelle dove raggruppare dei componenti senza pero stravolgere il routing e senza influenzare la Url. Questo è possibile scrivendo il nome della cartella in cui inseriamo i componenti tra parentesi tonde (overview).
   Quindi /dashboard/(overview)/page.tsx diventa --> /dashboard
 
+- Next.js ti consente di creare segmenti di percorso dinamici quando non conosci il nome esatto del segmento e desideri creare percorsi sulla base dei dati. Potrebbero essere titoli di post di blog, pagine di prodotti, ecc. Puoi creare segmenti di percorso dinamici racchiudendo il nome di una cartella tra parentesi quadre. Ad esempio, [id], [post] o [slug].
+
 # RENDERING DINAMICO
 
 - Con il rendering dinamico, il contenuto viene visualizzato sul server per ciascun utente al momento della richiesta (quando l'utente visita la pagina). Ci sono un paio di vantaggi del rendering dinamico:
@@ -71,7 +73,7 @@ Piccola descrizione dello scaffolding:
   Puoi utilizzare un'API Next.js richiamata unstable_noStoreall'interno dei Componenti server o funzioni di recupero dei dati per disattivare il rendering statico.
   dobbiamo quindi importarla --> import { unstable_noStore as noStore } from 'next/cache'; ed usarla poi nei componenti --> noStore();
 
-# STREAMIN
+# STREAMING
 
 - Per un Rendering Dinamico piu profesionale possiamo usare la tecnica chiamata STREAMING. Lo streaming è una tecnica di trasferimento dati che consente di suddividere una pagina in "pezzi" più piccoli e di trasmetterli progressivamente dal server al client non appena sono pronti.Tramite lo streaming, puoi evitare che richieste di dati lente blocchino l'intera pagina. Ciò consente all'utente di vedere e interagire con parti della pagina senza attendere il caricamento di tutti i dati prima che qualsiasi interfaccia utente possa essere mostrata all'utente.
 

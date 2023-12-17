@@ -10,6 +10,7 @@ import { z } from 'zod';
 import { sql } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
+import { InvoiceForm } from './definitions';
 
 // Usiamo la libreria Zod per convalidare i dati che ci arrivano dal form prima di inviarli al server, 
 // per essere sicuri che siano del tipo corretto. Istanziamo la tipologia di ogetto da controllare 
@@ -22,6 +23,7 @@ const FormSchema = z.object({
 });
    
 const CreateInvoice = FormSchema.omit({ id: true, date: true });
+const UpdateInvoice = FormSchema.omit({ id: true, date: true });
  
 export async function createInvoice(formData: FormData) {
     // La funzione get() serve a recuperare un valore da un oggetto passandogli la chiave per estrarlo. 
@@ -51,5 +53,33 @@ export async function createInvoice(formData: FormData) {
   revalidatePath('/dashboard/invoices');
 
   // Funzione per reindirizzare l'utente alla pagina indicata una volta inviato il modulo al server
+  redirect('/dashboard/invoices');
+}
+
+export async function updateInvoice(id: string, formData: FormData){
+
+    /*
+    - Estrazione dei dati da formData.
+    - Convalidare i tipi con Zod.
+    - Conversione dell'importo in centesimi.
+    - Passando le variabili alla tua query SQL.
+    - Chiamata revalidatePath per svuotare la cache del client ed effettuare una nuova richiesta al server.
+    - Chiamata redirect per reindirizzare l'utente alla pagina della fattura.
+    */
+
+
+  let updatedInvoice = UpdateInvoice.parse({
+    customerId: formData.get('customerId'),
+    amount: formData.get('amount'),
+    status: formData.get('status'),
+  })
+
+  updatedInvoice.amount = updatedInvoice.amount * 100;
+
+  await sql`UPDATE invoices
+  SET customer_id = ${updatedInvoice.customerId}, status = ${updatedInvoice.status}, amount = ${updatedInvoice.amount}
+  WHERE id = ${id}`;
+
+  revalidatePath('/dashboard/invoices');
   redirect('/dashboard/invoices');
 }
