@@ -137,3 +137,10 @@ Il bello del prerendering parziale è che non è necessario modificare il codice
   <NOTA BENE> : in HTML, passeresti un URL all'attributo action del form. Questo URL sarà la destinazione a cui inviare i dati del modulo (solitamente un endpoint API).
   Tuttavia, in React, l' attributo action è considerato un oggetto speciale, il che significa che React si basa su di esso per consentire l'invocazione delle azioni.
   Dietro le quinte, le azioni server creano un endpoint POST API. Questo è il motivo per cui non è necessario creare manualmente gli endpoint API quando si utilizzano Azioni server.
+
+# Gestione degli errori
+
+- Per la gestione degli errori lato client , Nextjs ci mette a disposizione un componente custom chiamato error.tsx che possiamo associare a qualsiasi page.tsx ed accetterà in ingresso
+  oggetto di tipo Error e una funzione reset() => void che puo essere customizzata o lasciata cosi per fare un redirect alla pagina aperta prima dell'errore.
+
+- Altro componente per la gestione degli errori è not-found.tsx component. Questo ha la precedenza sul componente error.tsx e verrà invocato quando per esempio chiamiamo una risorsa che non esiste piu o un path non piu coperto.

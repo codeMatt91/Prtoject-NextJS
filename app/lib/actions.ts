@@ -40,10 +40,17 @@ export async function createInvoice(formData: FormData) {
     quindi questa operazione di split restituisce un array con due elementi: la data e l'orario.*/
     const date = new Date().toISOString().split('T')[0];
 
-    await sql`
-    INSERT INTO invoices (customer_id, amount, status, date)
-    VALUES (${customerId}, ${amountInCents}, ${status}, ${date})
-  `;
+    try{
+
+        await sql`
+        INSERT INTO invoices (customer_id, amount, status, date)
+        VALUES (${customerId}, ${amountInCents}, ${status}, ${date})
+      `;
+    } catch (error) {
+        return {
+          message: 'Database Error: Failed to Create Invoice.',
+        };
+    }
 
   /*Next.js ha una cache del router lato client che memorizza i segmenti di percorso nel browser dell'utente per un certo periodo. 
   Insieme al precaricamento, questa cache garantisce che gli utenti possano navigare rapidamente 
@@ -76,15 +83,25 @@ export async function updateInvoice(id: string, formData: FormData){
 
   updatedInvoice.amount = updatedInvoice.amount * 100;
 
-  await sql`UPDATE invoices
-  SET customer_id = ${updatedInvoice.customerId}, status = ${updatedInvoice.status}, amount = ${updatedInvoice.amount}
-  WHERE id = ${id}`;
+  try{
+      await sql`UPDATE invoices
+      SET customer_id = ${updatedInvoice.customerId}, status = ${updatedInvoice.status}, amount = ${updatedInvoice.amount}
+      WHERE id = ${id}`;
+    } catch (error) {
+        return { message: 'Database Error: Failed to Update Invoice.' };
+    }
 
   revalidatePath('/dashboard/invoices');
   redirect('/dashboard/invoices');
 }
 
 export async function deleteInvoice(id: string) {
-    await sql`DELETE FROM invoices WHERE id = ${id}`;
-    revalidatePath('/dashboard/invoices');
+    
+    try {
+        await sql`DELETE FROM invoices WHERE id = ${id}`;
+        revalidatePath('/dashboard/invoices');
+        return { message: 'Deleted Invoice.' };
+    } catch (error) {
+    return { message: 'Database Error: Failed to Delete Invoice.' };
+    }
 }
